@@ -1,0 +1,1 @@
+/home/leigh/Register/Learning_Rust/part_database/target/debug/libpart_database.rmeta: /home/leigh/Register/Learning_Rust/part_database/src/database.rs /home/leigh/Register/Learning_Rust/part_database/src/main.rs /home/leigh/Register/Learning_Rust/part_database/src/part.rs

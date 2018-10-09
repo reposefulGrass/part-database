@@ -1,0 +1,7 @@
+[package]
+name = "part_database"
+version = "0.1.0"
+authors = ["Leigh <reposefulGrass@gmail.com>"]
+
+[dependencies]
+colored = "1.6"
