@@ -1,8 +1,5 @@
 
-extern crate colored; 
-
 use part::Part;
-use colored::*;
 
 pub struct Database {
     pub database: Vec<Part>,
@@ -29,11 +26,11 @@ impl Database {
         None
     }
 
-    pub fn update (&mut self, number: u32, quantity_change: i32) -> Result<ColoredString, ColoredString> {
+    pub fn update (&mut self, number: u32, quantity_change: i32) -> Result<String, String> {
         let found = match self.search(number) {
             Some(part) => part,
             None => {
-                return Err("\n[PB]: Part was not found!".red());
+                return Err("\n[PB]: Part was not found!".to_string());
             }
         };
 
@@ -43,7 +40,7 @@ impl Database {
 
             // prevent the quantity from being negative
             if new_quantity.is_negative() {
-                return Err("\n[PB]: Quantity cannot be negative.".red());
+                return Err("\n[PB]: Quantity cannot be negative.".to_string());
             }
             else {
                 found.quantity = new_quantity as u32;
@@ -53,7 +50,7 @@ impl Database {
             found.quantity += quantity_change as u32;
         }
 
-        Ok("\n[PB]: Part was updated!".green())
+        Ok("\n[PB]: Part was updated!".to_string())
     }
 
     pub fn get_database (&self) -> &Vec<Part> {

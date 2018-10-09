@@ -25,6 +25,7 @@ fn main() {
     loop {
         let mut user_input = String::new();
 
+        println!("\n========================================================");
         print_interface();
 
         print!("{}", "Enter an operation code: ".blue());
@@ -101,6 +102,8 @@ fn main() {
                 };
                 
                 db.insert(part);
+
+                println!("\n{}", "[PB]: Part was succesfully inserted!".green());
             },
 
             SEARCH => {
@@ -165,8 +168,8 @@ fn main() {
 
 
                 match db.update(part_number, quantity_change) {
-                    Ok(updated)     => println!("{}", updated),
-                    Err(error)      => println!("{}", error),
+                    Ok(updated)     => println!("{}", updated.green()),
+                    Err(error)      => println!("{}", error.red()),
                 };
             }
 
