@@ -13,7 +13,7 @@ impl Database {
     }
 
     pub fn insert (&mut self, part: Part) {
-        self.database.push(part);     
+        self.database.push(part);
     }
 
     pub fn search (&mut self, number: u32) -> Option<&mut Part> {
@@ -61,3 +61,46 @@ impl Database {
         &mut self.database
     }
 }
+
+#[test]
+fn db_insert_test () {
+    let mut db = Database::new();
+    let part = Part { number: 123, name: "Metal".to_string(), quantity: 100 };
+
+    db.insert(part);
+
+    assert!(db.database.len() == 1);
+}
+
+#[test]
+fn db_search_test () {
+    let mut db = Database::new();
+    let part = Part { number: 123, name: "Metal".to_string(), quantity: 100 };
+
+    db.insert(part);
+
+    let part2 = db.search(123).unwrap();
+
+    assert_eq!(123, part2.number);
+    assert_eq!("Metal".to_string(), part2.name);
+    assert_eq!(100, part2.quantity);
+}
+
+#[test]
+fn db_update_test () {
+    let mut db = Database::new();
+    let part = Part { number: 123, name: "Metal".to_string(), quantity: 100 };
+
+    db.insert(part);
+    db.update(123, -50);
+
+    let part2 = db.search(123).unwrap();
+
+    assert_eq!(123, part2.number);
+    assert_eq!("Metal".to_string(), part2.name);
+    assert_eq!(50, part2.quantity);
+}
+
+
+
+

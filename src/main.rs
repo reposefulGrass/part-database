@@ -245,6 +245,52 @@ fn main() {
     }
 }
 
+pub fn ask_for_part_number () -> Option<u32> {
+    let mut part_number = String::new();
+            
+    print!("{}", "Enter part number: ".blue());
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut part_number)
+        .expect("Failed to read part number!");
+            
+    match part_number.trim().parse() {
+        Ok(num) => { return Some(num); },
+        Err(_)  => { return None; }
+    };
+}
+
+pub fn ask_for_part_name () -> String {
+    let mut part_name = String::new();
+            
+    print!("{}", "Enter part number: ".blue());
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut part_name)
+        .expect("Failed to read part number!");
+
+    part_name = part_name.trim().to_string();
+
+    if part_name.len() >= 16 {
+        part_name.truncate(13);
+        part_name.push_str("...");
+    }
+
+    return Some(part_name);
+}
+
+pub fn ask_for_part_quantity () -> Option<u32> {
+    let mut part_number = String::new();
+            
+    print!("{}", "Enter part number: ".blue());
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut part_quantity)
+        .expect("Failed to read part number!");
+            
+    let part_quantity: u32 = match part_quantity.trim().parse() {
+        Ok(num) => { return Some(num); },
+        Err(_)  => { return None; }
+    };
+}
+
 fn print_interface () {
     println!("\n{}", "Part Database Management System [PB]".yellow());
 
