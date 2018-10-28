@@ -76,21 +76,12 @@ fn main() {
 
         match op_code {
             Opcode::Insert => {
-                let mut part_number   = String::new();
-                let mut part_name     = String::new();
-                let mut part_quantity = String::new();
-            
-                print!("{}", "Enter part number: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut part_number)
-                    .expect("Failed to read part number!");
-            
-                let part_number: u32 = match part_number.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        status = Error("Please enter a valid part number!".to_string()); 
+                let part_number = match ask_for_part_number() {
+                    Some(number) => number,
+                    None => {
+                        status = Error("Please enter a valid part number!".to_string());
                         continue;
-                    },
+                    }
                 };
 
                 if db.search(part_number).is_some() {
@@ -98,30 +89,12 @@ fn main() {
                     continue;
                 };
 
-                print!("{}", "Enter part name: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut part_name)
-                    .expect("Failed to read part name!");
+                let part_name = ask_for_part_name();
 
-                // get rid of the trailing newline
-                if part_name.contains('\n') {
-                    part_name.pop();
-                }
-
-                if part_name.len() >= 16 {
-                    part_name.truncate(13);
-                    part_name.push_str("...");
-                }
-
-                print!("{}", "Enter part quantity: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut part_quantity)
-                    .expect("Failed to read part quantity!");
-
-                let part_quantity: u32 = match part_quantity.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        status = Error("[Error]: Please enter a valid part quantity.".to_string());
+                let part_quantity = match ask_for_part_quantity() {
+                    Some(number) => number,
+                    None => {
+                        status = Error("Please enter a valid part quantity.".to_string());
                         continue;
                     },
                 };
@@ -138,17 +111,10 @@ fn main() {
             },
 
             Opcode::Search => {
-                let mut part_number = String::new();
-
-                print!("{}", "Enter part number: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut part_number)
-                    .expect("Failed to read part number!");
-
-                let part_number: u32 = match part_number.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        status = Error("Please enter a valid part number".to_string());
+                let part_number = match ask_for_part_number() {
+                    Some(number) => number,
+                    None => {
+                        status = Error("Please enter a valid part number!".to_string());
                         continue;
                     }
                 };
@@ -178,21 +144,14 @@ fn main() {
             },
 
             Opcode::Update => {
-                let mut part_number = String::new();
-
-                print!("{}", "Enter part number: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut part_number)
-                    .expect("Failed to read part number!");
-
-                let part_number: u32 = match part_number.trim().parse() {
-                    Ok(num) => num,
-                    Err(_) => {
-                        status = Error("Please enter a valid part number".to_string());
+                let part_number = match ask_for_part_number() {
+                    Some(number) => number,
+                    None => {
+                        status = Error("Please enter a valid part number!".to_string());
                         continue;
                     }
                 };
-                
+
                 let mut quantity_change = String::new();
 
                 print!("{}", "Enter change in quantity: ".blue());
@@ -207,7 +166,6 @@ fn main() {
                         continue;
                     }
                 };
-
 
                 match db.update(part_number, quantity_change) {
                     Ok(updated) => {
@@ -274,18 +232,18 @@ pub fn ask_for_part_name () -> String {
         part_name.push_str("...");
     }
 
-    return Some(part_name);
+    return part_name;
 }
 
 pub fn ask_for_part_quantity () -> Option<u32> {
-    let mut part_number = String::new();
+    let mut part_quantity = String::new();
             
     print!("{}", "Enter part number: ".blue());
     io::stdout().flush().unwrap();
     io::stdin().read_line(&mut part_quantity)
         .expect("Failed to read part number!");
             
-    let part_quantity: u32 = match part_quantity.trim().parse() {
+    match part_quantity.trim().parse() {
         Ok(num) => { return Some(num); },
         Err(_)  => { return None; }
     };
