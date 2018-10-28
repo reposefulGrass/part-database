@@ -30,7 +30,7 @@ impl Database {
         let found = match self.search(number) {
             Some(part) => part,
             None => {
-                return Err("\n[PB]: Part was not found!".to_string());
+                return Err("\nPart was not found!".to_string());
             }
         };
 
@@ -40,7 +40,7 @@ impl Database {
 
             // prevent the quantity from being negative
             if new_quantity.is_negative() {
-                return Err("\n[PB]: Quantity cannot be negative.".to_string());
+                return Err("\nQuantity cannot be negative.".to_string());
             }
             else {
                 found.quantity = new_quantity as u32;
@@ -50,7 +50,7 @@ impl Database {
             found.quantity += quantity_change as u32;
         }
 
-        Ok("\n[PB]: Part was updated!".to_string())
+        Ok("\nPart was updated!".to_string())
     }
 
     pub fn get_database (&self) -> &Vec<Part> {
