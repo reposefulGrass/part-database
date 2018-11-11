@@ -2,8 +2,8 @@
 // A collection of utilities to manipulate the terminal
 
 pub enum ClearCode {
-    CursorToEnd = 0,
-    CursorToBeginning= 1,
+    _CursorToEnd = 0,
+    _CursorToBeginning= 1,
     Everything = 2
 }
 

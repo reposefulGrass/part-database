@@ -49,10 +49,7 @@ fn main() {
         }
         status = Neither;
 
-        print!("{}", "Enter an operation code: ".blue());
-        io::stdout().flush().unwrap();
-        io::stdin().read_line(&mut user_input)
-            .expect("Failed to read line!");
+        read_input("Enter an operation code: ".blue(), &mut user_input);
 
         let op_code: Opcode = match user_input.trim().parse() {
             Ok(num) => match num {
@@ -136,11 +133,7 @@ fn main() {
                 println!("");
 
                 let mut discard = String::new();
-
-                println!("{}", "Press ENTER to go back to prompt".red());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut discard)
-                    .expect("Failed to read user input!");
+                read_input("Press ENTER to go back to the prompt".red(), &mut discard);
             },
 
             Opcode::Update => {
@@ -153,11 +146,7 @@ fn main() {
                 };
 
                 let mut quantity_change = String::new();
-
-                print!("{}", "Enter change in quantity: ".blue());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut quantity_change)
-                    .expect("Failed to read part number!");
+                read_input("Enter change in quantity: ".blue(), &mut quantity_change);
 
                 let quantity_change: i32 = match quantity_change.trim().parse() {
                     Ok(num) => num,
@@ -189,11 +178,7 @@ fn main() {
                 println!("");
 
                 let mut discard = String::new();
-
-                println!("{}", "Press ENTER to go back to prompt".red());
-                io::stdout().flush().unwrap();
-                io::stdin().read_line(&mut discard)
-                    .expect("Failed to read user input!");
+                read_input("Press ENTER to go back to the prompt".red(), &mut discard);
             },
 
             Opcode::Quit => {
@@ -203,14 +188,17 @@ fn main() {
     }
 }
 
+fn read_input (string: ColoredString, input: &mut String) {
+    print!("{}", string);
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(input)
+        .expect("Failed to read input");
+}
+
 pub fn ask_for_part_number () -> Option<u32> {
     let mut part_number = String::new();
             
-    print!("{}", "Enter part number: ".blue());
-    io::stdout().flush().unwrap();
-    io::stdin().read_line(&mut part_number)
-        .expect("Failed to read part number!");
-            
+    read_input("Enter part number: ".blue(), &mut part_number); 
     match part_number.trim().parse() {
         Ok(num) => { return Some(num); },
         Err(_)  => { return None; }
@@ -220,11 +208,7 @@ pub fn ask_for_part_number () -> Option<u32> {
 pub fn ask_for_part_name () -> String {
     let mut part_name = String::new();
             
-    print!("{}", "Enter part number: ".blue());
-    io::stdout().flush().unwrap();
-    io::stdin().read_line(&mut part_name)
-        .expect("Failed to read part number!");
-
+    read_input("Enter part name: ".blue(), &mut part_name); 
     part_name = part_name.trim().to_string();
 
     if part_name.len() >= 16 {
@@ -238,11 +222,7 @@ pub fn ask_for_part_name () -> String {
 pub fn ask_for_part_quantity () -> Option<u32> {
     let mut part_quantity = String::new();
             
-    print!("{}", "Enter part number: ".blue());
-    io::stdout().flush().unwrap();
-    io::stdin().read_line(&mut part_quantity)
-        .expect("Failed to read part number!");
-            
+    read_input("Enter part quantity: ".blue(), &mut part_quantity); 
     match part_quantity.trim().parse() {
         Ok(num) => { return Some(num); },
         Err(_)  => { return None; }
